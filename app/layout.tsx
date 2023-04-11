@@ -2,6 +2,8 @@ import { Nunito } from "next/font/google";
 
 import "./globals.css";
 import Navbar from "./components/Navbar/Page";
+import ClientOnly from "./components/ClientOnly";
+import Modal from "./components/Modals/Modals";
 
 // Reserved CONSTANT in next 13 for meta data
 // metadata reference: https://beta.nextjs.org/docs/api-reference/metadata#metadata-fields
@@ -22,7 +24,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <Navbar />
+        <ClientOnly>
+          <Modal
+            secondaryActionLabel="Cancel"
+            disabled={false}
+            actionLabel={"Submit"}
+            title="Hello there"
+            isOpen
+          />
+          <Navbar />
+        </ClientOnly>
         {children}
       </body>
     </html>
