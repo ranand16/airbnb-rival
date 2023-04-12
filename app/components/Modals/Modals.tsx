@@ -42,6 +42,11 @@ const Modal: React.FC<ModalProps> = ({
   }, [disabled, onClose]);
 
   const handleSubmit = useCallback(() => {
+    console.log(
+      "🚀 ~ file: Modals.tsx:48 ~ handleSubmit ~ disabled:",
+      disabled
+    );
+
     if (disabled) return;
     onSubmit();
   }, [disabled, onSubmit]);
@@ -80,12 +85,16 @@ const Modal: React.FC<ModalProps> = ({
                       disabled={disabled}
                       label={secondaryActionLabel}
                       onClick={handleSecondaryAction}
+                      outline
                     />
                   )}
                   <Button
                     disabled={disabled}
                     label={actionLabel}
-                    onClick={handleSubmit}
+                    onClick={() => {
+                      console.log("handle submit ");
+                      handleSubmit();
+                    }}
                   />
                 </div>
               </div>
