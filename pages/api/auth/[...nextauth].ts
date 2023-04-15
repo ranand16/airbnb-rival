@@ -6,8 +6,15 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
+const adapter = PrismaAdapter(prisma);
+const _linkAccount = adapter.linkAccount;
+adapter.linkAccount = (account) => {
+  const { "not-before-policy": _, refresh_expires_in, ...data } = account;
+  return _linkAccount(data);
+};
+
 export const authOption: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: adapter,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID as string,
@@ -16,6 +23,7 @@ export const authOption: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
     }),
     CredentialsProvider({
       name: "credentials",

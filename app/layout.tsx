@@ -24,6 +24,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const currentUser = await getCurrentUser();
+  console.log("🚀 ~ file: layout.tsx:27 ~ currentUser:", currentUser);
 
   return (
     <html lang="en">
